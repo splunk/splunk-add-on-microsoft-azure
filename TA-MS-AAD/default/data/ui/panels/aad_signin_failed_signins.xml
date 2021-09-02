@@ -1,0 +1,18 @@
+<panel>
+  <title>Azure AD Sing-Ins - Failed Sign-ins (Last 24 Hours)</title>
+  <table>
+    <search>
+      <query>sourcetype="ms:aad:signin" loginStatus=Failure | stats count by userPrincipalName userDisplayName appDisplayName failureReason deviceInformation | rename userPrincipalName AS UPN userDisplayName AS Name appDisplayName AS "Application" failureReason AS "Failure Reason" deviceInformation AS "Device Information" | fields - count</query>
+      <earliest>-24h@h</earliest>
+      <latest>now</latest>
+      <sampleRatio>1</sampleRatio>
+    </search>
+    <option name="count">20</option>
+    <option name="dataOverlayMode">none</option>
+    <option name="drilldown">none</option>
+    <option name="percentagesRow">false</option>
+    <option name="rowNumbers">false</option>
+    <option name="totalsRow">false</option>
+    <option name="wrap">true</option>
+  </table>
+</panel>

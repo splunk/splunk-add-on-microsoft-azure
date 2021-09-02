@@ -1,0 +1,77 @@
+<dashboard version="1.1">
+  <label>Setup Overview</label>
+  <row>
+    <panel>
+      <html>
+        <h2>
+        <span class="icon-warning" style="font-size:2em; color: #F8BE34"/>
+        The Event Hub input has been deprecated in this add-on.  Please use the Splunk supported <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a> to ingest Event Hub data.
+        </h2>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Basic Input Setup</title>
+      <html>
+        <p>
+          Most inputs require an Azure AD App Registration to authenticate to Azure. An Azure AD App Registration is similar to a username and password, except an Azure AD App Registration has a client ID and client secret.
+        </p>
+        <p>
+          <ul>
+            <li>
+              Instructions for creating an Azure AD App Registration can be found <a href="/app/TA-MS-AAD/aad_app_registration">here</a>.
+            </li>
+          </ul>
+        </p>
+        <p>
+          The Azure AD App Registration must be granted necessary permissions in order to retrieve the necessary data. Most inputs only require <b>Reader</b> access to the subscription; however, some inputs will require additional API permissions.  
+        </p>
+        <p>
+          <ul>
+            <li>
+              Refer to <a href="http://bit.ly/Splunk_Azure_Permissions" class="external" target="_blank">this document</a> for specific permissions required for each input in this add-on and others.
+            </li>
+          </ul>
+        </p>
+        <p>
+          After creating the Azure AD App Registration, enter the Client ID and Client Secret in the <a href="/app/TA-MS-AAD/configuration">Configuration</a> section of this add-on.
+        </p>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Event Hub Setup</title>
+      <html>
+        <p>
+          <span class="icon-warning" style="color: #F8BE34"/>
+          The Event Hub input has been deprecated in this add-on.  Please use the Splunk supported <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a> to ingest Event Hub data.
+        </p>
+        <p>
+        The Event Hub input does not use an Azure Active Directory Application Registration.  Instead, the Event Hub input connects directly to an Azure Event Hub using a connection string.  The connection string is stored encrypted on the local Splunk instance.
+        </p>
+        <p>
+          Refer to the <a href="/app/TA-MS-AAD/event_hub_input_setup">Event Hub Input Setup</a> page for specific directions.
+        </p>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Troubleshooting</title>
+      <html>
+        <p>Several troubleshooting views have been included:
+        <ul>
+          <li>The <b>View Checkpoints</b> view allows you to see the current checkpoint value for each input.  Inputs use checkpoints to page through data.  The checkpoint value may be a date/time, or a cursor string returned from an API.</li>
+          <li>The <b>View Debug Logs</b> view shows debug events specific to the add-on inputs.  Ensure the add-on log level is set to <b>DEBUG</b> by navigating to <b>Configuration &gt; Logging &gt; Log level</b>.</li>
+          <li>The <b>View Error Logs</b> view will help troubleshoot errors.</li>
+        </ul>
+        </p>
+        <p>
+          Additional help can be found on <a href="https://answers.splunk.com/" target="_blank" class="external">Splunk Answers</a>.
+        </p>
+      </html>
+    </panel>
+  </row>
+</dashboard>

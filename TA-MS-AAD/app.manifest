@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0.0",
+  "info": {
+    "title": "Microsoft Azure Add-on for Splunk",
+    "id": {
+      "group": null,
+      "name": "TA-MS-AAD",
+      "version": "3.2.0"
+    },
+    "author": [
+      {
+        "name": "Splunk Works",
+        "email": null,
+        "company": null
+      }
+    ],
+    "releaseDate": null,
+    "description": "This add-on collects Microsoft Azure including Azure AD, resource metadata, metrics, Event Hub data, consumption, billing, topology, and Security Center.",
+    "classification": {
+      "intendedAudience": null,
+      "categories": [],
+      "developmentStatus": null
+    },
+    "commonInformationModels": null,
+    "license": {
+      "name": null,
+      "text": null,
+      "uri": null
+    },
+    "privacyPolicy": {
+      "name": null,
+      "text": null,
+      "uri": null
+    },
+    "releaseNotes": {
+      "name": null,
+      "text": null,
+      "uri": null
+    }
+  },
+  "dependencies": {
+  },
+  "tasks": [],
+  "inputGroups": {
+  },
+  "incompatibleApps": {
+  },
+  "platformRequirements": {
+    "splunk": {
+      "Enterprise": "*"
+    }
+  }
+}

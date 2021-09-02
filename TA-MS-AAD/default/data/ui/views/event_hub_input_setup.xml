@@ -1,0 +1,75 @@
+<dashboard version="1.1">
+  <label>Event Hub Input Setup</label>
+  <description>Instructions for setting up an Event Hub input.</description>
+  <row>
+    <panel>
+      <html>
+        <h2>
+        <span class="icon-warning" style="font-size:2em; color: #F8BE34"></span>
+        The Event Hub input has been deprecated in this add-on.  Please use the Splunk supported <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a> to ingest Event Hub data.
+        </h2>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Step 1 - Get the Event Hub Connection String</title>
+      <html>
+        <ul>
+          <li>Login to <a href="https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.EventHub%2Fnamespaces" target="_blank">https://portal.azure.com</a>
+          </li>
+          <li>Select your Event Hub namespace</li>
+          <li>Select <b>Shared access policies</b>
+          </li>
+          <li>Select <b>RootManageSharedAccessKey</b> or create a new SAS policy with a <b>Listen</b> claim</li>
+          <li>Copy the connection string for either the primary or secondary key</li>
+        </ul>
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#screenshot1" aria-expanded="false" aria-controls="screenshot1">View example</button>
+        </p>
+        <p class="collapse" id="screenshot1">
+          <a href="/static/app/TA-MS-AAD/img/event_hub_connection_string.png" target="_blank"><img src="/static/app/TA-MS-AAD/img/event_hub_connection_string.png" /></a>
+        </p>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Step 2 - Get the Event Hub Name</title>
+      <html>
+        <ul>
+          <li>Login to <a href="https://portal.azure.com/#blade/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.EventHub%2Fnamespaces" target="_blank">https://portal.azure.com</a>
+          </li>
+          <li>Select your Event Hub namespace</li>
+          <li>Select <b>Event Hubs</b> under <b>Entities</b>
+          </li>
+          <li>Copy the name of the desired Event Hub</li>
+        </ul>
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#screenshot2" aria-expanded="false" aria-controls="screenshot2">View example</button>
+        </p>
+        <p class="collapse" id="screenshot2">
+          <a href="/static/app/TA-MS-AAD/img/event_hub_name.png" target="_blank"><img src="/static/app/TA-MS-AAD/img/event_hub_name.png" width="750" height="422" /></a>
+        </p>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Step 3 - Add an Event Hub Input</title>
+      <html>
+        <ul>
+          <li>Select <b>Inputs</b> from the above navigation bar</li>
+          <li>Click <b>Create New Input</b> >> <b>Azure Event Hub</b></li>
+          <li>Specify unique input name</li>
+          <li>Enter a collection interval (seconds)</li>
+          <li>Paste the connection string from Step 1</li>
+          <li>Paste the Event Hub name from Step 2</li>
+          <li>Specify the <b>Consumer Group</b> - leave this as <b>$Default</b> if you have not created a customer Consumer Group for your Event Hub</li>
+          <li>Specify a Sourcetype for your Event Hub data</li>
+          <li>Choose a transport type.  Note: if using AMQP, ensure ports 5671 and 5672 outbound are open.</li>
+        </ul>
+      </html>
+    </panel>
+  </row>
+</dashboard>
