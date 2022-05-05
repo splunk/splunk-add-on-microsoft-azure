@@ -1,5 +1,5 @@
 
-import ta_ms_aad_declare
+import import_declare_test
 
 from splunktaucclib.rest_handler.endpoint import (
     field,
@@ -8,7 +8,8 @@ from splunktaucclib.rest_handler.endpoint import (
     MultipleModel,
 )
 from splunktaucclib.rest_handler import admin_external, util
-from splunk_aoblib.rest_migration import ConfigMigrationHandler
+from splunktaucclib.rest_handler.admin_external import AdminExternalHandler
+import logging
 
 util.remove_http_proxy_env_vars()
 
@@ -22,20 +23,13 @@ fields_proxy = [
         validator=None
     ), 
     field.RestField(
-        'proxy_type',
-        required=False,
-        encrypted=False,
-        default='http',
-        validator=None
-    ), 
-    field.RestField(
         'proxy_url',
         required=False,
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=4096, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -44,8 +38,8 @@ fields_proxy = [
         encrypted=False,
         default=None,
         validator=validator.Number(
-            min_val=1, 
             max_val=65535, 
+            min_val=1, 
         )
     ), 
     field.RestField(
@@ -54,8 +48,8 @@ fields_proxy = [
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=50, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -64,16 +58,9 @@ fields_proxy = [
         encrypted=True,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
         )
-    ), 
-    field.RestField(
-        'proxy_rdns',
-        required=False,
-        encrypted=False,
-        default=None,
-        validator=None
     )
 ]
 model_proxy = RestModel(fields_proxy, name='proxy')
@@ -101,7 +88,8 @@ endpoint = MultipleModel(
 
 
 if __name__ == '__main__':
+    logging.getLogger().addHandler(logging.NullHandler())
     admin_external.handle(
         endpoint,
-        handler=ConfigMigrationHandler,
+        handler=AdminExternalHandler,
     )

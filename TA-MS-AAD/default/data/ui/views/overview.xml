@@ -2,11 +2,23 @@
   <label>Setup Overview</label>
   <row>
     <panel>
+      <title>What's New?</title>
       <html>
-        <h2>
-        <span class="icon-warning" style="font-size:2em; color: #F8BE34"/>
-        The Event Hub input has been deprecated in this add-on.  Please use the Splunk supported <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a> to ingest Event Hub data.
-        </h2>
+        <p>
+          <ul>
+            <li>The Event Hub input has been removed from this add-on.  To ingest Event Hub data, use the <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a></li>
+            <ul>
+              <li><a href="https://github.com/splunk/azure-functions-splunk/tree/master/event-hubs-hec" target="_balnk" class="external">Azure Functions</a> may also be used to ingest Event Hub data.  Azure Functions will push Event Hub data to Splunk via Splunk's HTTP Event Collector.</li>
+            </ul>
+            <li>Improvements in REST API session handling</li>
+            <li>Added query parameters option to the Azure Active Directory Users input</li>
+            <li>Added input name to all DEBUG logging statements</li>
+          </ul>
+        </p>
+        <h2>Important note regarding Azure Active Directory Sign-In and Audit inputs</h2>
+        <p>
+          Due to <a href="https://docs.microsoft.com/en-us/graph/throttling#identity-and-access-service-limits" target="_blank" class="external">Microsoft throttling limits</a>, customers may receive <code>429 Too Many Requests</code> messages when using the Azure Active Directory Sign-In input and the Azure Active Directory Audit input. In these cases, data collection may lag or stop due to the throttling limits. It is recommended to send Azure Active Directory Sign-In and Audit data to an Event Hub and use the <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services to ingest the data</a>.
+        </p>
       </html>
     </panel>
   </row>
@@ -15,17 +27,17 @@
       <title>Basic Input Setup</title>
       <html>
         <p>
-          Most inputs require an Azure AD App Registration to authenticate to Azure. An Azure AD App Registration is similar to a username and password, except an Azure AD App Registration has a client ID and client secret.
+          Most inputs require an Azure AD App Registration to authenticate to Azure. An Azure AD App Registration is similar to a username and password, except an Azure AD App Registration has a Client ID and Client Secret.
         </p>
         <p>
           <ul>
             <li>
-              Instructions for creating an Azure AD App Registration can be found <a href="/app/TA-MS-AAD/aad_app_registration">here</a>.
+              Instructions for creating an Azure AD App Registration and obtaining a Client ID and Client Secret can be found <a href="/app/TA-MS-AAD/aad_app_registration">here</a>.
             </li>
           </ul>
         </p>
         <p>
-          The Azure AD App Registration must be granted necessary permissions in order to retrieve the necessary data. Most inputs only require <b>Reader</b> access to the subscription; however, some inputs will require additional API permissions.  
+          The Azure AD App Registration must be granted the necessary permissions in order to retrieve the necessary data. Most inputs only require <b>Reader</b> access to the subscription; however, some inputs will require additional API permissions.  
         </p>
         <p>
           <ul>
@@ -42,30 +54,13 @@
   </row>
   <row>
     <panel>
-      <title>Event Hub Setup</title>
-      <html>
-        <p>
-          <span class="icon-warning" style="color: #F8BE34"/>
-          The Event Hub input has been deprecated in this add-on.  Please use the Splunk supported <a href="https://splunkbase.splunk.com/app/3110/" target="_blank" class="external">Splunk Add-on for Microsoft Cloud Services</a> to ingest Event Hub data.
-        </p>
-        <p>
-        The Event Hub input does not use an Azure Active Directory Application Registration.  Instead, the Event Hub input connects directly to an Azure Event Hub using a connection string.  The connection string is stored encrypted on the local Splunk instance.
-        </p>
-        <p>
-          Refer to the <a href="/app/TA-MS-AAD/event_hub_input_setup">Event Hub Input Setup</a> page for specific directions.
-        </p>
-      </html>
-    </panel>
-  </row>
-  <row>
-    <panel>
       <title>Troubleshooting</title>
       <html>
         <p>Several troubleshooting views have been included:
         <ul>
-          <li>The <b>View Checkpoints</b> view allows you to see the current checkpoint value for each input.  Inputs use checkpoints to page through data.  The checkpoint value may be a date/time, or a cursor string returned from an API.</li>
-          <li>The <b>View Debug Logs</b> view shows debug events specific to the add-on inputs.  Ensure the add-on log level is set to <b>DEBUG</b> by navigating to <b>Configuration &gt; Logging &gt; Log level</b>.</li>
-          <li>The <b>View Error Logs</b> view will help troubleshoot errors.</li>
+          <li>The <a href="/app/TA-MS-AAD/search?q=| inputlookup TA_Azure_checkpoint_lookup | eval key = _key" target="_blank"><b>View Checkpoints</b></a> view allows you to see the current checkpoint value for each input.  Inputs use checkpoints to page through data.  The checkpoint value may be a date/time, or a cursor string returned from an API.</li>
+          <li>The <a href="/app/TA-MS-AAD/search?q=index=_internal sourcetype=ta:ms:aad:log DEBUG _Splunk_" target="_blank"><b>View Debug Logs</b></a> view shows debug events specific to the add-on inputs.  Ensure the add-on log level is set to <b>DEBUG</b> by navigating to <b>Configuration &gt; Logging &gt; Log level</b>.</li>
+          <li>The <a href="/app/TA-MS-AAD/search?q=index=_internal sourcetype=ta:ms:aad:log ERROR _Splunk_" target="_blank"><b>View Error Logs</b></a> view will help troubleshoot errors.</li>
         </ul>
         </p>
         <p>

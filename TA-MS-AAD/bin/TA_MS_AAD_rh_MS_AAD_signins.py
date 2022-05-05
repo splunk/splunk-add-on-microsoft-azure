@@ -1,5 +1,5 @@
 
-import ta_ms_aad_declare
+import import_declare_test
 
 from splunktaucclib.rest_handler.endpoint import (
     field,
@@ -8,12 +8,20 @@ from splunktaucclib.rest_handler.endpoint import (
     DataInputModel,
 )
 from splunktaucclib.rest_handler import admin_external, util
-from splunk_aoblib.rest_migration import ConfigMigrationHandler
+from splunktaucclib.rest_handler.admin_external import AdminExternalHandler
+import logging
 
 util.remove_http_proxy_env_vars()
 
 
 fields = [
+    field.RestField(
+        'AAD_sign_in_note',
+        required=False,
+        encrypted=False,
+        default=None,
+        validator=None
+    ), 
     field.RestField(
         'interval',
         required=True,
@@ -29,8 +37,8 @@ fields = [
         encrypted=False,
         default='default',
         validator=validator.String(
-            min_len=1, 
             max_len=80, 
+            min_len=1, 
         )
     ), 
     field.RestField(
@@ -46,8 +54,8 @@ fields = [
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -63,8 +71,8 @@ fields = [
         encrypted=False,
         default='azure:aad:signin',
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -73,8 +81,23 @@ fields = [
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
+        )
+    ), 
+    field.RestField(
+        'filter',
+        required=False,
+        encrypted=False,
+        default=None,
+        validator=validator.AllOf(
+            validator.String(
+                max_len=8192, 
+                min_len=0, 
+            ), 
+            validator.Pattern(
+                regex=r"""^\$filter\=""", 
+            )
         )
     ), 
     field.RestField(
@@ -82,9 +105,15 @@ fields = [
         required=True,
         encrypted=False,
         default='0',
-        validator=validator.String(
-            min_len=0, 
-            max_len=8192, 
+        validator=validator.AllOf(
+            validator.String(
+                max_len=8192, 
+                min_len=0, 
+            ), 
+            validator.Number(
+                max_val=100000, 
+                min_val=0, 
+            )
         )
     ), 
     field.RestField(
@@ -93,8 +122,8 @@ fields = [
         encrypted=False,
         default='420',
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -123,7 +152,8 @@ endpoint = DataInputModel(
 
 
 if __name__ == '__main__':
+    logging.getLogger().addHandler(logging.NullHandler())
     admin_external.handle(
         endpoint,
-        handler=ConfigMigrationHandler,
+        handler=AdminExternalHandler,
     )

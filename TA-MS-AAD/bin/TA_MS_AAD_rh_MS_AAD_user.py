@@ -1,5 +1,5 @@
 
-import ta_ms_aad_declare
+import import_declare_test
 
 from splunktaucclib.rest_handler.endpoint import (
     field,
@@ -8,7 +8,8 @@ from splunktaucclib.rest_handler.endpoint import (
     DataInputModel,
 )
 from splunktaucclib.rest_handler import admin_external, util
-from splunk_aoblib.rest_migration import ConfigMigrationHandler
+from splunktaucclib.rest_handler.admin_external import AdminExternalHandler
+import logging
 
 util.remove_http_proxy_env_vars()
 
@@ -18,7 +19,7 @@ fields = [
         'interval',
         required=True,
         encrypted=False,
-        default=None,
+        default=86400,
         validator=validator.Pattern(
             regex=r"""^\-[1-9]\d*$|^\d*$""", 
         )
@@ -29,8 +30,8 @@ fields = [
         encrypted=False,
         default='default',
         validator=validator.String(
-            min_len=1, 
             max_len=80, 
+            min_len=1, 
         )
     ), 
     field.RestField(
@@ -46,8 +47,23 @@ fields = [
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
+        )
+    ), 
+    field.RestField(
+        'filter',
+        required=False,
+        encrypted=False,
+        default=None,
+        validator=validator.AllOf(
+            validator.String(
+                max_len=8192, 
+                min_len=0, 
+            ), 
+            validator.Pattern(
+                regex=r"""^\$""", 
+            )
         )
     ), 
     field.RestField(
@@ -63,8 +79,8 @@ fields = [
         encrypted=False,
         default='azure:aad:user',
         validator=validator.String(
-            min_len=0, 
             max_len=8192, 
+            min_len=0, 
         )
     ), 
     field.RestField(
@@ -93,7 +109,8 @@ endpoint = DataInputModel(
 
 
 if __name__ == '__main__':
+    logging.getLogger().addHandler(logging.NullHandler())
     admin_external.handle(
         endpoint,
-        handler=ConfigMigrationHandler,
+        handler=AdminExternalHandler,
     )

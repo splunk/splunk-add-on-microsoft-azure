@@ -2,11 +2,6 @@
     <view name="inputs" />
     <view name="configuration"/>
     <view name="search" label="Search"/>
-    <collection label="Documentation">
-        <view name="overview" default="true" />
-        <view name="aad_app_registration" />
-        <view name="event_hub_input_setup" />
-    </collection>
     <collection label="Troubleshooting">
         <a href='search?q=| inputlookup TA_Azure_checkpoint_lookup | eval key = _key'>View Checkpoints</a>
         <a href='search?q=index=_internal sourcetype=ta:ms:aad:log DEBUG _Splunk_'>View Debug Logs</a>

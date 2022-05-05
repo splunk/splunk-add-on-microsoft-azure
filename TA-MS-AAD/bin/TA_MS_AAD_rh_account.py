@@ -1,5 +1,5 @@
 
-import ta_ms_aad_declare
+import import_declare_test
 
 from splunktaucclib.rest_handler.endpoint import (
     field,
@@ -8,7 +8,8 @@ from splunktaucclib.rest_handler.endpoint import (
     SingleModel,
 )
 from splunktaucclib.rest_handler import admin_external, util
-from splunk_aoblib.rest_migration import ConfigMigrationHandler
+from splunktaucclib.rest_handler.admin_external import AdminExternalHandler
+import logging
 
 util.remove_http_proxy_env_vars()
 
@@ -20,8 +21,8 @@ fields = [
         encrypted=False,
         default=None,
         validator=validator.String(
-            min_len=1, 
             max_len=200, 
+            min_len=1, 
         )
     ), 
     field.RestField(
@@ -30,8 +31,8 @@ fields = [
         encrypted=True,
         default=None,
         validator=validator.String(
-            min_len=1, 
             max_len=8192, 
+            min_len=1, 
         )
     )
 ]
@@ -41,11 +42,13 @@ model = RestModel(fields, name=None)
 endpoint = SingleModel(
     'ta_ms_aad_account',
     model,
+    config_name='account'
 )
 
 
 if __name__ == '__main__':
+    logging.getLogger().addHandler(logging.NullHandler())
     admin_external.handle(
         endpoint,
-        handler=ConfigMigrationHandler,
+        handler=AdminExternalHandler,
     )
