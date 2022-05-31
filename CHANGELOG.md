@@ -2,12 +2,14 @@
 * **BREAKING CHANGE**: removed deprecated event hub input. Use the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110/) to collect event hub data.
 * Refactored code base to [UCC](https://github.com/splunk/addonfactory-ucc-generator) instead of [Splunk Add-on Builder](https://splunkbase.splunk.com/app/2962/)
 * Implemented requests `Session()` and `Rerty()` classes for REST API calls
+* Added query parameters option to the Azure Active Directory Users input
+* Added query parameters option to the Azure Active Directory Groups input
+* Added filter parameter option to the Azure Active Directory Sign-ins input
+* Added input name to all DEBUG logging statements
 * Updated Resource Graph input to use API version `2021-03-01`
 * Updated Resource Group inputs to use API version `2021-04-01`
 * Updated Security Center alerts input to use API version `2021-01-01`
 * Updated Virtual Network inputs to use API version `2021-03-01`
-* Added query parameters option to the Azure Active Directory Users input
-* Added input name to all DEBUG logging statements
 
 # Version 3.2.0
 * New input to collect Azure Active Directory Groups
