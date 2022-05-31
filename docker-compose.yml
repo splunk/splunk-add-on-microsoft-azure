@@ -19,3 +19,4 @@ services:
       - SPLUNKBASE_PASSWORD=${SPLUNKBASE_PASSWORD}
     volumes:
       - ./output/${SPLUNK_APP_ID}:/opt/splunk/etc/apps/${SPLUNK_APP_ID}/
+      - ./splunk_files/user-prefs.conf:/opt/splunk/etc/system/local/user-prefs.conf
