@@ -63,6 +63,10 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
                                          description="a.k.a. Directory ID",
                                          required_on_create=True,
                                          required_on_edit=False))
+        scheme.add_argument(smi.Argument("filter", title="Query Parameters (optional)",
+                                         description="Example: $expand=members",
+                                         required_on_create=False,
+                                         required_on_edit=False))
         scheme.add_argument(smi.Argument("environment", title="Environment",
                                          description="",
                                          required_on_create=True,
@@ -91,6 +95,7 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
         tenant_id = helper.get_arg("tenant_id")
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         source_type = helper.get_arg("group_sourcetype")
+        filter = helper.get_arg("filter")
         endpoint = helper.get_arg("endpoint")
         input_name = helper.get_input_stanza_names()
         
@@ -101,6 +106,8 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
         if(session):
             helper.log_debug("_Splunk_ input_name=%s Collecting group data." % input_name)
             url = graph_base_url + "/%s/groups/" % endpoint
+            if(filter):
+                url = "%s?%s" % (url, filter)
             
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
             items = response['value'] or None
