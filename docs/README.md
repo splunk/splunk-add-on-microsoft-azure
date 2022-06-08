@@ -1,4 +1,4 @@
-# Microsoft Azure Add-on for Splunk
+# Splunk Add-on for Microsoft Azure
 
 # About
 * Vendor Products:
