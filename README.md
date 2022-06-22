@@ -1,7 +1,7 @@
 # Splunk Add-on for Microsoft Azure
 
 ## Build
-This add-on is built with Splunk's [UCC Generator](https://github.com/splunk/addonfactory-ucc-generator).  Install `ucc-gen` per the instructions. Then, execute the following from the command line in the root of this repository to build the add-on:
+This add-on is built with Splunk's [UCC Generator](https://github.com/splunk/addonfactory-ucc-generator).  Install `ucc-gen` [per the instructions](https://splunk.github.io/addonfactory-ucc-generator/#installation). Then, execute the following from the command line in the root of this repository to build the add-on:
 
     ucc-gen --ta-version=<version>
 
