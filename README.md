@@ -1,5 +1,7 @@
 # Splunk Add-on for Microsoft Azure
 
+**BREAKING CHANGE**: version 4.0.0 removed the deprecated event hub input. Use the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110/) to collect event hub data. Refer to the [CHANGELOG](CHANGELOG.md) for more detail.
+
 ## Documentation
 Refer to the [Wiki in this repository](https://github.com/splunk/splunk-add-on-microsoft-azure/wiki) for add-on documentation.
 
