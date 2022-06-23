@@ -461,7 +461,7 @@
                             "tooltip": "Azure AD throttling guidance",
                             "options": {
                                 "text": "Azure AD throttling guidance",
-                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/tree/main/docs#throttling-guidance"
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Active-Directory-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure#throttling-guidance"
                             },
                             "required": false
                         },
@@ -1034,7 +1034,7 @@
                             "tooltip": "Azure AD throttling guidance",
                             "options": {
                                 "text": "Azure AD throttling guidance",
-                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/tree/main/docs#throttling-guidance"
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Active-Directory-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure#throttling-guidance"
                             }
                         },
                         {
