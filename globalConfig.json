@@ -1417,6 +1417,7 @@
                             "type": "text",
                             "help": "Enter a unique name for the data input",
                             "required": true,
+                            "defaultValue": 86400,
                             "validators": [
                                 {
                                     "type": "regex",
