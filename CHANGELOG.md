@@ -1,5 +1,6 @@
 # Version 4.0.0
 * **BREAKING CHANGE**: removed deprecated event hub input. Use the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110/) to collect event hub data.
+* Code is now open source [https://github.com/splunk/splunk-add-on-microsoft-azure](https://github.com/splunk/splunk-add-on-microsoft-azure)
 * New input to collect Azure Log Analytics data via KQL queries
 * Refactored code base to [UCC](https://github.com/splunk/addonfactory-ucc-generator) instead of [Splunk Add-on Builder](https://splunkbase.splunk.com/app/2962/)
 * Implemented requests `Session()` and `Rerty()` classes for REST API calls
