@@ -134,7 +134,7 @@ class ModInputazure_security_center_input(base_mi.BaseModInput):
                     url = management_base_url + "/subscriptions/%s/providers/Microsoft.Security/alerts?api-version=%s&$filter=Properties/DetectedTimeUtc gt %s" % (subscription_id, alert_api_version, alert_check_point)
     
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 max_asc_alert_date = alert_check_point
                 
                 while items:
@@ -154,7 +154,8 @@ class ModInputazure_security_center_input(base_mi.BaseModInput):
                     sys.stdout.flush()
                         
                     helper.save_check_point(alert_check_point_key, max_asc_alert_date)
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_tasks):
                 helper.log_debug("_Splunk_ input_name=%s Collecting security task data. sourcetype='%s'" % (input_name, task_sourcetype))
@@ -167,7 +168,7 @@ class ModInputazure_security_center_input(base_mi.BaseModInput):
                     url = management_base_url + "/subscriptions/%s/providers/Microsoft.Security/tasks?api-version=%s&$filter=Properties/LastStateChangeTimeUtc gt %s" % (subscription_id, task_api_version, task_check_point)
                 
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 max_asc_task_date = task_check_point
                 
                 while items:
@@ -186,7 +187,8 @@ class ModInputazure_security_center_input(base_mi.BaseModInput):
                         
                     sys.stdout.flush()
                     helper.save_check_point(task_check_point_key, max_asc_task_date)
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
         else:
             raise RuntimeError("Unable to obtain access token. Please check the Client ID, Client Secret, and Tenant ID")
 

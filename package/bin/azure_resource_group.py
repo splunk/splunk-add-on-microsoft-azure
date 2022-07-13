@@ -102,7 +102,7 @@ class ModInputazure_resource_group(base_mi.BaseModInput):
             helper.log_debug("_Splunk_ input_name=%s Collecting resource group data." % input_name)
             url = management_base_url + "/subscriptions/%s/resourcegroups?api-version=%s" % (subscription_id, resource_group_api_version)
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-            items = response['value'] or None
+            items = None if response == None else response['value']
     
             while items:
                 for item in items:
@@ -115,7 +115,8 @@ class ModInputazure_resource_group(base_mi.BaseModInput):
     
                 sys.stdout.flush()
                 sys.stdout.flush()
-                items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                items = None if response == None else response['value']
     
         else:
             raise RuntimeError("Unable to obtain access token. Please check the Client ID, Client Secret, and Tenant ID")

@@ -133,7 +133,7 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                     url = graph_base_url + "/%s/identityProtection/riskDetections?$orderby=lastUpdatedDateTime&$filter=lastUpdatedDateTime gt %s" % (endpoint, risk_detection_check_point)
     
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 max_risk_detection_date = risk_detection_check_point
                 while items:
                     for item in items:
@@ -152,7 +152,8 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                         
                     sys.stdout.flush()
                     helper.save_check_point(risk_detection_check_point_key, max_risk_detection_date)
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
                     
             if(collect_risky_user_data):
@@ -167,7 +168,7 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                     url = graph_base_url + "/%s/identityProtection/riskyUsers?$orderby=riskLastUpdatedDateTime&$filter=riskLastUpdatedDateTime gt %s" % (endpoint, risky_user_check_point)
                 
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 max_risky_user_date = risky_user_check_point
                 while items:
                     for item in items:
@@ -186,7 +187,8 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                         
                     sys.stdout.flush()
                     helper.save_check_point(risky_user_check_point_key, max_risky_user_date)
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
     
         else:
             raise RuntimeError("Unable to obtain access token. Please check the Client ID, Client Secret, and Tenant ID")
