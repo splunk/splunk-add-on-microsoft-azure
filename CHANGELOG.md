@@ -1,4 +1,4 @@
-# Version 4.0.1
+# Version 4.0.2
 * Bug fix - Problem creating new AAD Audit Input - [Issue #3](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/3)
 * Bug fix - Azure AD User and Group pagination issue
 
