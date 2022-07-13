@@ -109,7 +109,7 @@ class ModInputMS_AAD_user(base_mi.BaseModInput):
                 url = "%s?%s" % (url, filter)
     
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-            items = response['value'] or None
+            items = None if response == None else response['value']
     
             while items:
                 for item in items:
@@ -121,7 +121,8 @@ class ModInputMS_AAD_user(base_mi.BaseModInput):
                     ew.write_event(event)
     
                 sys.stdout.flush()
-                items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                items = None if response == None else response['value']
     
         else:
             helper.log_error("_Splunk_ Unable to obtain access token")

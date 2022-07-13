@@ -184,7 +184,7 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
             max_signinDateTime = query_date
     
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-            items = response['value'] or None
+            items = None if response == None else response['value']
     
             while items:
                 for item in items:
@@ -206,7 +206,8 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
                 
                 # Check point the largest signinDateTime seen during the query
                 helper.save_check_point(check_point_key, max_signinDateTime)
-                items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                items = None if response == None else response['value']
         else:
             helper.log_error("_Splunk_ Unable to obtain access token")
 

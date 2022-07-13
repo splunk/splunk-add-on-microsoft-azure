@@ -147,7 +147,7 @@ class ModInputazure_comp(base_mi.BaseModInput):
                 helper.log_debug("_Splunk_ input_name=%s Collecting managed disk data. sourcetype='%s'" % (input_name, disk_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Compute/disks?api-version=%s" % (subscription_id, disk_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -157,14 +157,15 @@ class ModInputazure_comp(base_mi.BaseModInput):
                             sourcetype=disk_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
                     
             if(collect_images):
                 helper.log_debug("_Splunk_ input_name=%s Collecting image data. sourcetype='%s'" % (input_name, image_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Compute/images?api-version=%s" % (subscription_id, image_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -174,13 +175,14 @@ class ModInputazure_comp(base_mi.BaseModInput):
                             sourcetype=image_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_snapshots):
                 helper.log_debug("_Splunk_ input_name=%s Collecting snapshot data. sourcetype='%s'" % (input_name, snapshot_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Compute/snapshots?api-version=%s" % (subscription_id, snapshot_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -190,13 +192,14 @@ class ModInputazure_comp(base_mi.BaseModInput):
                             sourcetype=snapshot_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_vms):
                 helper.log_debug("_Splunk_ input_name=%s Collecting virtual machine data. sourcetype='%s'" % (input_name, vm_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Compute/virtualMachines?api-version=%s" % (subscription_id, vm_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         try:
@@ -228,7 +231,8 @@ class ModInputazure_comp(base_mi.BaseModInput):
                             sourcetype=vm_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
         else:
             raise RuntimeError("Unable to obtain access token. Please check the Client ID, Client Secret, and Tenant ID")

@@ -29,7 +29,6 @@ import six
 TIMEOUT = 5 #seconds
 
 def handle_nextLink(helper=None, response=None, session=None):
-    items = None
     if '@odata.nextLink' in response:
         nextLink = response['@odata.nextLink']
         helper.log_debug("_Splunk_ nextLink URL (@odata.nextLink): %s" % nextLink)
@@ -39,8 +38,9 @@ def handle_nextLink(helper=None, response=None, session=None):
             raise ValueError("nextLink scheme is not HTTPS. nextLink URL: %s" % nextLink)
         
         response = get_items_batch_session(helper=helper, url=nextLink, session=session)
-        items = response['value']
-    return items
+        return response
+    else:
+        return None
 
 def requests_retry_session(retries=3, backoff_factor=1, status_forcelist=(429, 500, 502, 503, 504), session=None):
     session = session or requests.Session()

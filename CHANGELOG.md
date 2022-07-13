@@ -1,3 +1,7 @@
+# Version 4.0.1
+* Bug fix - Problem creating new AAD Audit Input - [Issue #3](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/3)
+* Bug fix - Azure AD User and Group pagination issue
+
 # Version 4.0.0
 * **BREAKING CHANGE**: removed deprecated event hub input. Use the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110/) to collect event hub data.
 * Code is now open source [https://github.com/splunk/splunk-add-on-microsoft-azure](https://github.com/splunk/splunk-add-on-microsoft-azure)

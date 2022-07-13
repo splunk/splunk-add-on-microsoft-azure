@@ -144,7 +144,7 @@ class ModInputazure_virtual_network(base_mi.BaseModInput):
                 helper.log_debug("_Splunk_ input_name=%s Collecting virtual network data. sourcetype='%s'" % (input_name, vnet_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Network/virtualNetworks?api-version=%s" % (subscription_id, vnet_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -154,13 +154,14 @@ class ModInputazure_virtual_network(base_mi.BaseModInput):
                             sourcetype=vnet_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_nics):
                 helper.log_debug("_Splunk_ input_name=%s Collecting nic data. sourcetype='%s'" % (input_name, nic_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Network/networkInterfaces?api-version=%s" % (subscription_id, nic_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -170,13 +171,14 @@ class ModInputazure_virtual_network(base_mi.BaseModInput):
                             sourcetype=nic_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_nsgs):
                 helper.log_debug("_Splunk_ input_name=%s Collecting nsg data. sourcetype='%s'" % (input_name, nsg_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Network/networkSecurityGroups?api-version=%s" % (subscription_id, nsg_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -186,13 +188,14 @@ class ModInputazure_virtual_network(base_mi.BaseModInput):
                             sourcetype=nsg_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
             if(collect_ips):
                 helper.log_debug("_Splunk_ input_name=%s Collecting IP address data. sourcetype='%s'" % (input_name, ip_sourcetype))
                 url = management_base_url + "/subscriptions/%s/providers/Microsoft.Network/publicIPAddresses?api-version=%s" % (subscription_id, ip_api_version)
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
-                items = response['value'] or None
+                items = None if response == None else response['value']
                 while items:
                     for item in items:
                         event = helper.new_event(
@@ -202,7 +205,8 @@ class ModInputazure_virtual_network(base_mi.BaseModInput):
                             sourcetype=ip_sourcetype)
                         ew.write_event(event)
                     sys.stdout.flush()
-                    items = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    response = azutils.handle_nextLink(helper=helper, response=response, session=session)
+                    items = None if response == None else response['value']
                     
         else:
             raise RuntimeError("Unable to obtain access token. Please check the Client ID, Client Secret, and Tenant ID")
