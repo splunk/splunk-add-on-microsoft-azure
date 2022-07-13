@@ -73,7 +73,7 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
         scheme.add_argument(smi.Argument("name", title="Name",
                                          description="",
                                          required_on_create=True))
-        scheme.add_argument(smi.Argument("AAD_sign_in_note", title=" Date",
+        scheme.add_argument(smi.Argument("AAD_sign_in_note", title="",
                                          description="Azure AD throttling guidance https://splunkbase.splunk.com/app/3757/#/details#throttling-guidance",
                                          required_on_create=False,
                                          required_on_edit=False))

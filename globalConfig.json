@@ -2,7 +2,7 @@
     "meta": {
         "name": "TA-MS-AAD",
         "displayName": "Splunk Add-on for Microsoft Azure",
-        "version": "4.0.1",
+        "version": "4.0.2",
         "apiVersion": "3.0.0",
         "restRoot": "TA_MS_AAD",
         "schemaVersion": "0.0.3"
@@ -1028,14 +1028,15 @@
                     "entity": [
                         {
                             "type": "helpLink",
-                            "field": "AAD_sign_in_note",
+                            "field": "AAD_audit_note",
                             "label": "",
                             "help": "This input uses Microsoft Graph Azure AD activity reports and is subject to throttling limits. Refer to the documentation link above for more information.",
                             "tooltip": "Azure AD throttling guidance",
                             "options": {
                                 "text": "Azure AD throttling guidance",
                                 "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Active-Directory-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure#throttling-guidance"
-                            }
+                            },
+                            "required": false
                         },
                         {
                             "field": "name",
