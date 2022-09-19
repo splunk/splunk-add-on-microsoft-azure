@@ -74,14 +74,19 @@ def get_items(helper, access_token, url, items=[]):
         response_json = json.loads(r.content)
         items += response_json['value']
 
+        nextLink = None
         if '@odata.nextLink' in response_json:
             nextLink = response_json['@odata.nextLink']
 
+        if 'nextLink' in response_json:
+            nextLink = response_json['nextLink']
+
+        if nextLink:
             # This should never happen, but just in case...
             if not is_https(nextLink):
                 raise ValueError("nextLink scheme is not HTTPS. nextLink URL: %s" % nextLink)
 
-            helper.log_debug("_Splunk_ nextLink URL (@odata.nextLink): %s" % nextLink)
+            helper.log_debug("_Splunk_ nextLink URL: %s" % nextLink)
             get_items(helper, access_token, nextLink, items)
         
     except Exception as e:
