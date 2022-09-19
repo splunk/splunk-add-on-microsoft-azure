@@ -26,7 +26,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 import six
 
-TIMEOUT = 5 #seconds
+TIMEOUT = 60 #seconds
 
 def handle_nextLink(helper=None, response=None, session=None):
     if '@odata.nextLink' in response:
