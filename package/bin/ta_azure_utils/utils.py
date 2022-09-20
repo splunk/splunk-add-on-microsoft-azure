@@ -26,7 +26,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 import six
 
-TIMEOUT = 5 #seconds
+TIMEOUT = 60 #seconds
 
 def handle_nextLink(helper=None, response=None, session=None):
     if '@odata.nextLink' in response:
@@ -74,14 +74,19 @@ def get_items(helper, access_token, url, items=[]):
         response_json = json.loads(r.content)
         items += response_json['value']
 
+        nextLink = None
         if '@odata.nextLink' in response_json:
             nextLink = response_json['@odata.nextLink']
 
+        if 'nextLink' in response_json:
+            nextLink = response_json['nextLink']
+
+        if nextLink:
             # This should never happen, but just in case...
             if not is_https(nextLink):
                 raise ValueError("nextLink scheme is not HTTPS. nextLink URL: %s" % nextLink)
 
-            helper.log_debug("_Splunk_ nextLink URL (@odata.nextLink): %s" % nextLink)
+            helper.log_debug("_Splunk_ nextLink URL: %s" % nextLink)
             get_items(helper, access_token, nextLink, items)
         
     except Exception as e:
@@ -123,11 +128,11 @@ def get_items_batch_session(helper=None, url=None, session=None):
 
     return response_json
 
-def post_items_batch_session(helper=None, url=None, headers=None, data=None, session=None):
+def post_items_batch_session(helper=None, url=None, headers=None, data=None, session=None, verify=False):
     
     t0 = time.time()
     try:
-        r = requests_retry_session(session=session).post(url=url, headers=headers, data=data, timeout=TIMEOUT)
+        r = requests_retry_session(session=session).post(url=url, headers=headers, data=data, timeout=TIMEOUT, verify=verify)
         r.raise_for_status()
         response_json = None
         response_json = json.loads(r.content)

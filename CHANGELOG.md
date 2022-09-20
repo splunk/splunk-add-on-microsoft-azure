@@ -1,3 +1,11 @@
+# Version 4.0.3
+* Fix - problem loading some inputs on Windows system. [Issue #8](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/8) and [Issue #12](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/12)
+* Added `name` parameter to the `[id]` stanza in `default/app.conf`
+* Bumped `splunktaucclib` to version `6.0.6` to address potential credential corruption issues
+* Fix - errant newline in `eventtypes.conf` for `azure_vuln` stanza. [Issue #19](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/19)
+* Fix - nextLink parameter is different for consumption input causing limited results. [Issue #20](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/20)
+* Increase REST request timeout to 60 seconds
+
 # Version 4.0.2
 * Bug fix - Problem creating new AAD Audit Input - [Issue #3](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/3)
 * Bug fix - Azure AD User and Group pagination issue

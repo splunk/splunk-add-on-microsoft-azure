@@ -52,7 +52,7 @@ def get_start_date(helper, check_point_key):
         start_date = helper.get_arg("start_date")
         if (start_date not in [None,'']):
             d = dateutil.parser.parse(start_date)
-            helper.log_debug("_Splunk_ input_name=%s Getting start date. input_name=%s Start date in stanza: %s" % (input_name, start_date))
+            helper.log_debug("_Splunk_ input_name=%s Getting start date. input_name=%s Start date in stanza: %s" % (input_name, input_name, start_date))
             return d.strftime('%Y-%m-%d')
         else:
             # If there was no start date specified, default to 90 day ago
