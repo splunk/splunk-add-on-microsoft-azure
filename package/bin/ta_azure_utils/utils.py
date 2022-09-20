@@ -128,11 +128,11 @@ def get_items_batch_session(helper=None, url=None, session=None):
 
     return response_json
 
-def post_items_batch_session(helper=None, url=None, headers=None, data=None, session=None):
+def post_items_batch_session(helper=None, url=None, headers=None, data=None, session=None, verify=False):
     
     t0 = time.time()
     try:
-        r = requests_retry_session(session=session).post(url=url, headers=headers, data=data, timeout=TIMEOUT)
+        r = requests_retry_session(session=session).post(url=url, headers=headers, data=data, timeout=TIMEOUT, verify=verify)
         r.raise_for_status()
         response_json = None
         response_json = json.loads(r.content)
