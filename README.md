@@ -12,7 +12,7 @@ This add-on is built with Splunk's [UCC Generator](https://github.com/splunk/add
 
 Example:
 
-    ucc-gen --ta-version=4.0.3
+    ucc-gen --ta-version=4.1.0
 
 The add-on will be built in an `output` directory in the root of the repository.
 
