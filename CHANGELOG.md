@@ -1,3 +1,7 @@
+# Version 4.1.0
+* Added input for Azure AD Applications. [Issue #27](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/27)
+
+
 # Version 4.0.3
 * Fix - problem loading some inputs on Windows system. [Issue #8](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/8) and [Issue #12](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/12)
 * Added `name` parameter to the `[id]` stanza in `default/app.conf`
