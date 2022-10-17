@@ -137,7 +137,7 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
                 raise ValueError("Invalid date format specified for 'Start Date': %s" % start_date)
             # Make sure the date entered is less than 30 days in the past.
             # Otherwise, the reporting API will throw an error
-            if d < (datetime.datetime.now() - datetime.timedelta(days=30)):
+            if d.replace(tzinfo=None) < (datetime.datetime.now() - datetime.timedelta(days=30)):
                 helper.log_error("_Splunk_ 'Start Date' cannot be more than 30 days in the past.: " + start_date)
                 raise ValueError("'Start Date' cannot be more than 30 days in the past.")
     
