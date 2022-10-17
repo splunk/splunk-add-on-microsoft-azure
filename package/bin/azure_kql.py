@@ -105,8 +105,12 @@ class ModInputazure_kql(base_mi.BaseModInput):
         tenant_id = helper.get_arg("tenant_id")
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         index_stats = helper.get_arg("index_stats")
+        if (index_stats.lower() in ["1", "true"]):
+            index_stats = True
+        else:
+            index_stats = False
         index_empty_values = helper.get_arg("index_empty_values")
-        if (index_empty_values in ["True", "1", "true"]):
+        if (index_empty_values.lower() in ["1", "true"]):
             index_empty_values = True
         else:
             index_empty_values = False
