@@ -82,6 +82,10 @@ class ModInputazure_kql(base_mi.BaseModInput):
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
+        scheme.add_argument(smi.Argument("index_empty_values", title="Index emtpy field values",
+                                         description="",
+                                         required_on_create=True,
+                                         required_on_edit=False))
         return scheme
 
     def get_app_name(self):
@@ -101,6 +105,11 @@ class ModInputazure_kql(base_mi.BaseModInput):
         tenant_id = helper.get_arg("tenant_id")
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         index_stats = helper.get_arg("index_stats")
+        index_empty_values = helper.get_arg("index_empty_values")
+        if (index_empty_values in ["True", "1", "true"]):
+            index_empty_values = True
+        else:
+            index_empty_values = False
         stats_source_type = source_type + ':stats'
         input_name = helper.get_input_stanza_names()
         api_version = "v1"
@@ -138,7 +147,6 @@ class ModInputazure_kql(base_mi.BaseModInput):
                         helper.log_warning("_Splunk_ input_name=%s Cloud not get statistics data." % input_name)
                         pass
                     
-                
                 tables = response['tables'] or None
                 for table in tables:
                     columns = [] # list to hold column names
@@ -151,14 +159,20 @@ class ModInputazure_kql(base_mi.BaseModInput):
                         splunk_event["Table"] = table["name"]
                         for num, value in enumerate(row):
                             try:
+                                
                                 # if the value is JSON, parse it
                                 splunk_event[columns[num]] = json.loads(value)
                             except ValueError:
-                                # if the value is not JSON, leave it
-                                splunk_event[columns[num]] = value
+                                # if the value is not JSON, leave it (maybe)
+                                if value.strip() != "":
+                                    splunk_event[columns[num]] = value
+                                else:
+                                    if index_empty_values:
+                                        splunk_event[columns[num]] = value
+
                             except Exception as e:
                                 # catch anything else
-                                if value is None:
+                                if (value is None and index_empty_values):
                                     splunk_event[columns[num]] = ''
                                 continue
                         

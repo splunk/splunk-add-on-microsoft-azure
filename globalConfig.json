@@ -3053,6 +3053,14 @@
                             "help": "If checked, the input will index statistics about the KQL query. The term ':stats' will be appended to the specified sourcetype for the statistical data.",
                             "required": true,
                             "defaultValue": false
+                        },
+                        {
+                            "type": "checkbox",
+                            "field": "index_empty_values",
+                            "label": "Index emtpy field values",
+                            "help": "If checked, the input will index fields with empty values.",
+                            "required": true,
+                            "defaultValue": false
                         }
                     ]
                 },
