@@ -1583,7 +1583,6 @@
                             "type": "text",
                             "help": "Enter a unique name for the data input",
                             "required": true,
-                            "defaultValue": 86400,
                             "validators": [
                                 {
                                     "type": "regex",
@@ -1604,6 +1603,7 @@
                             "type": "text",
                             "required": true,
                             "help": "Time interval of input in seconds.",
+                            "defaultValue": 86400,
                             "validators": [
                                 {
                                     "type": "regex",
@@ -1990,7 +1990,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_security_center_input",
-                    "title": "Azure Security Center Alerts & Tasks",
+                    "title": "Microsoft Defender for Cloud (formerly Azure Security Center) Alerts & Tasks",
                     "entity": [
                         {
                             "field": "name",
