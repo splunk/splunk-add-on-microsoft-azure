@@ -280,6 +280,7 @@ def get_json_resources_by_query(helper=None, url=None, session=None, query=None,
         response_json = None
         response_json = json.loads(r.content)
     except Exception as e:
+        helper.log_debug("Request failed: url: %s, data: %s, response_status: %s, response_content: %s" % (url, data, r.status_code, response.content) 
         raise e
     finally:
         t1 = time.time()
