@@ -1,3 +1,7 @@
+# Version 4.2.0
+* Added input for Azure AD Service Principals. [Issue #35](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/35)
+
+
 # Version 4.1.0
 * Added input for Azure AD Applications. [Issue #27](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/27)
 
