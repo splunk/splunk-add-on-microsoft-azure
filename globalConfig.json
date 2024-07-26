@@ -451,7 +451,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_signins",
-                    "title": "Azure Active Directory Interactive Sign-ins",
+                    "title": "Microsoft Entra ID Interactive Sign-ins",
                     "entity": [
                         {
                             "type": "helpLink",
@@ -691,7 +691,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_user",
-                    "title": "Azure Active Directory Users",
+                    "title": "Microsoft Entra ID Users",
                     "entity": [
                         {
                             "field": "name",
@@ -859,7 +859,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_group",
-                    "title": "Azure Active Directory Groups",
+                    "title": "Microsoft Entra ID Groups",
                     "entity": [
                         {
                             "field": "name",
@@ -1024,7 +1024,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_app",
-                    "title": "Azure Active Directory Applications",
+                    "title": "Microsoft Entra ID Applications",
                     "entity": [
                         {
                             "field": "name",
@@ -1189,7 +1189,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_audit",
-                    "title": "Azure Active Directory Audit",
+                    "title": "Microsoft Entra ID Audit",
                     "entity": [
                         {
                             "type": "helpLink",
@@ -1401,7 +1401,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_identity_protection",
-                    "title": "Azure Active Directory Identity Protection",
+                    "title": "Microsoft Entra ID Identity Protection",
                     "entity": [
                         {
                             "field": "name",
@@ -1575,7 +1575,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_device",
-                    "title": "Azure Active Directory Devices",
+                    "title": "Microsoft Entra ID Devices",
                     "entity": [
                         {
                             "field": "name",
@@ -1723,7 +1723,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_metrics",
-                    "title": "Azure Metrics",
+                    "title": "Azure Metrics (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -1990,7 +1990,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_security_center_input",
-                    "title": "Microsoft Defender for Cloud (formerly Azure Security Center) Alerts & Tasks",
+                    "title": "Microsoft Defender for Cloud Alerts & Tasks",
                     "entity": [
                         {
                             "field": "name",
@@ -2164,7 +2164,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_subscription",
-                    "title": "Azure Subscriptions",
+                    "title": "Azure Subscriptions (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -2291,7 +2291,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_resource_group",
-                    "title": "Azure Resource Groups",
+                    "title": "Azure Resource Groups (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -2433,7 +2433,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_virtual_network",
-                    "title": "Azure Virtual Network",
+                    "title": "Azure Virtual Network (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -2660,7 +2660,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_comp",
-                    "title": "Azure Compute",
+                    "title": "Azure Compute (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -2887,7 +2887,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_kql",
-                    "title": "Azure KQL Log Analytics",
+                    "title": "Azure KQL Log Analytics (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -3067,7 +3067,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_consumption",
-                    "title": "Azure Billing and Consumption",
+                    "title": "Azure Billing and Consumption (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
@@ -3245,7 +3245,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_reservation_recommendation",
-                    "title": "Azure Reservation Recommendation",
+                    "title": "Azure Reservation Recommendation (Deprecated)",
                     "entity": [
                         {
                             "field": "name",
