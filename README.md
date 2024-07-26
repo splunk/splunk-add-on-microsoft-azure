@@ -8,11 +8,11 @@ Refer to the [Wiki in this repository](https://github.com/splunk/splunk-add-on-m
 ## Build
 This add-on is built with Splunk's [UCC Generator](https://github.com/splunk/addonfactory-ucc-generator).  Install `ucc-gen` [per the instructions](https://splunk.github.io/addonfactory-ucc-generator/#installation). Then, execute the following from the command line in the root of this repository to build the add-on:
 
-    ucc-gen --ta-version=<version>
+    ucc-gen build --ta-version=<version>
 
 Example:
 
-    ucc-gen --ta-version=4.1.0
+    ucc-gen build --ta-version=4.1.0
 
 The add-on will be built in an `output` directory in the root of the repository.
 
