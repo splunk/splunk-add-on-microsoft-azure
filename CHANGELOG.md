@@ -1,6 +1,21 @@
 # Version 4.1.0
-* Added input for Azure AD Applications. [Issue #27](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/27)
+* Added an input for Microsoft Entra ID Applications. [Issue #27](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/27)
+* Added an input for Microsoft Graph Security API
 
+* Deprecated the Azure Metrics input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Subscriptions input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Resource Groups input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Virtual Networks input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Compute input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure KQL Log Analytics input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Billing and Consumption input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+* Deprecated the Azure Azure Reservation Recommendation input. This functionality has moved to the [Splunk Add-on for Microsoft Cloud Services](https://splunkbase.splunk.com/app/3110).
+
+* Changed `Azure Acitvie Directory` references to `Microsoft Entra ID`
+
+* Fix - set default values for inputs that use a Graph endpoint to address add-on upgrade issues. [Issue #21](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/21)
+* Fix - Azure AD Sign-in and Audit inputs would raise an error if a Start Date parameter contained a time zone.  [Issue #16](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/16)
+* Fix - the `index_stats` option was ignored in the KQL input.  [Issue #25](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/25)
 
 # Version 4.0.3
 * Fix - problem loading some inputs on Windows system. [Issue #8](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/8) and [Issue #12](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/12)
