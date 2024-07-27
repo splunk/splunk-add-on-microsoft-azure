@@ -47,9 +47,7 @@ User preferences like time zone and search preferences can be adjusted by editin
 
 ## Package
 
-    slim package output/TA-MS-AAD
-
-[Refer to the documentation](https://dev.splunk.com/enterprise/tutorials/module_validate/packageapp) for the Splunk Packaging Toolkit (`SLIM`) installation instructions.
+    ucc-gen package --path=./output/TA-MS-AAD
 
 
 _____________
