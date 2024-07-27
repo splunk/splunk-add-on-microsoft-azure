@@ -1,10 +1,9 @@
-version: "3.7"
-
 services:
   splunk:
     image: splunk/splunk:${SPLUNK_VERSION}
     container_name: splunk
     hostname: splunk
+    platform: linux/amd64
     ports:
       # external port:internal port
       - 8000:8000
