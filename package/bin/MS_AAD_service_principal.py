@@ -46,7 +46,7 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
     def get_scheme(self):
         """overloaded splunklib modularinput method"""
         scheme = super(ModInputMS_AAD_service_principal, self).get_scheme()
-        scheme.title = ("Azure Active Directory Service Principals")
+        scheme.title = ("Microsoft Entra ID Service Principals")
         scheme.description = ("Go to the add-on\'s configuration UI and configure modular inputs under the Inputs menu.")
         scheme.use_external_validation = True
         scheme.streaming_mode_xml = True
@@ -104,7 +104,7 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
         session = azauth.get_graph_session(client_id, client_secret, tenant_id, environment, helper)
         if(session):
             helper.log_debug("_Splunk_ input_name=%s Collecting service principals data." % input_name)
-            url = graph_base_url + "/%s/servicePrincipals" % endpoint
+            url = graph_base_url + "/%s/servicePrincipals/" % endpoint
             if(filter):
                 url = "%s?%s" % (url, filter)
     

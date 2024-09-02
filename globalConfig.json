@@ -2,10 +2,10 @@
     "meta": {
         "name": "TA-MS-AAD",
         "displayName": "Splunk Add-on for Microsoft Azure",
-        "version": "4.1.0",
+        "version": "4.2.0",
         "restRoot": "TA_MS_AAD",
         "schemaVersion": "0.0.8",
-        "_uccVersion": "5.48.2"
+        "_uccVersion": "5.49.0"
     },
     "pages": {
         "configuration": {
@@ -873,6 +873,164 @@
                         {
                             "field": "filter",
                             "label": "Query Parameters (optional)",
+                            "help": "Example: $expand=members",
+                            "required": false,
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                },
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Value must start with $",
+                                    "pattern": "^\\$"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "environment",
+                            "label": "Environment",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "defaultValue": "public",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "public",
+                                        "label": "Azure Public"
+                                    },
+                                    {
+                                        "value": "gov",
+                                        "label": "Azure Government"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "group_sourcetype",
+                            "label": "Group Sourcetype",
+                            "help": "",
+                            "required": true,
+                            "type": "text",
+                            "defaultValue": "azure:aad:group",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "endpoint",
+                            "label": "Endpoint",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "defaultValue": "v1.0",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "v1.0",
+                                        "label": "v1.0"
+                                    },
+                                    {
+                                        "value": "beta",
+                                        "label": "Beta"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "template": "input_with_helper",
+                    "name": "MS_AAD_app",
+                    "title": "Microsoft Entra ID Applications",
+                    "entity": [
+                        {
+                            "field": "name",
+                            "label": "Name",
+                            "type": "text",
+                            "help": "Enter a unique name for the data input",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "interval",
+                            "field": "interval",
+                            "label": "Interval",
+                            "help": "Time interval of input in seconds.",
+                            "required": true,
+                            "defaultValue": 86400
+                        },
+                        {
+                            "field": "index",
+                            "label": "Index",
+                            "type": "singleSelect",
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "createSearchChoice": true,
+                                "denyList": "^_.*$"
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "field": "azure_app_account",
+                            "label": "Azure App Account",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "account"
+                            }
+                        },
+                        {
+                            "field": "tenant_id",
+                            "label": "Tenant ID",
+                            "help": "a.k.a. Directory ID",
+                            "required": true,
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "filter",
+                            "label": "Query Parameters (optional)",
                             "help": "Example: $select=id,appId",
                             "required": false,
                             "type": "text",
@@ -952,8 +1110,8 @@
                 },
                 {
                     "template": "input_with_helper",
-                    "name": "MS_AAD_app",
-                    "title": "Microsoft Entra ID Applications",
+                    "name": "MS_AAD_service_principal",
+                    "title": "Microsoft Entra ID Service Principals",
                     "entity": [
                         {
                             "field": "name",
