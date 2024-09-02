@@ -209,7 +209,7 @@ class ModInputazure_comp(base_mi.BaseModInput):
                             match = re.search(pattern, vm_id)
                             vm_resource_group = match.group("vm_resource_group")
                             vm_name = match.group("vm_name")
-                            instance_view_url = "https://management.azure.com/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Compute/virtualMachines/%s/instanceView?api-version=%s" % (subscription_id, vm_resource_group, vm_name, vm_instance_view_api_version)
+                            instance_view_url = management_base_url + "/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Compute/virtualMachines/%s/instanceView?api-version=%s" % (subscription_id, vm_resource_group, vm_name, vm_instance_view_api_version)
                             vm_instance_view = azutils.get_item_session(helper=helper, session=session, url=instance_view_url)
                         
                             event = helper.new_event(

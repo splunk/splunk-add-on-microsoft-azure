@@ -3,9 +3,9 @@
         "name": "TA-MS-AAD",
         "displayName": "Splunk Add-on for Microsoft Azure",
         "version": "4.2.0",
-        "apiVersion": "3.0.0",
         "restRoot": "TA_MS_AAD",
-        "schemaVersion": "0.0.3"
+        "schemaVersion": "0.0.8",
+        "_uccVersion": "5.49.0"
     },
     "pages": {
         "configuration": {
@@ -59,9 +59,6 @@
                             "type": "text",
                             "required": true,
                             "help": "Enter the Client ID for this account.",
-                            "options": {
-                                "placeholder": "Enter the Client ID here"
-                            },
                             "validators": [
                                 {
                                     "type": "string",
@@ -158,41 +155,7 @@
                     }
                 },
                 {
-                    "name": "logging",
-                    "title": "Logging",
-                    "entity": [
-                        {
-                            "field": "loglevel",
-                            "label": "Log level",
-                            "type": "singleSelect",
-                            "options": {
-                                "disableSearch": true,
-                                "autoCompleteFields": [
-                                    {
-                                        "label": "DEBUG",
-                                        "value": "DEBUG"
-                                    },
-                                    {
-                                        "label": "INFO",
-                                        "value": "INFO"
-                                    },
-                                    {
-                                        "label": "WARNING",
-                                        "value": "WARNING"
-                                    },
-                                    {
-                                        "label": "ERROR",
-                                        "value": "ERROR"
-                                    },
-                                    {
-                                        "label": "CRITICAL",
-                                        "value": "CRITICAL"
-                                    }
-                                ]
-                            },
-                            "defaultValue": "INFO"
-                        }
-                    ]
+                    "type": "loggingTab"
                 }
             ]
         },
@@ -451,7 +414,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_signins",
-                    "title": "Azure Active Directory Interactive Sign-ins",
+                    "title": "Microsoft Entra ID Interactive Sign-ins",
                     "entity": [
                         {
                             "type": "helpLink",
@@ -462,8 +425,7 @@
                             "options": {
                                 "text": "Azure AD throttling guidance",
                                 "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Active-Directory-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure#throttling-guidance"
-                            },
-                            "required": false
+                            }
                         },
                         {
                             "field": "name",
@@ -486,18 +448,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -579,10 +534,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:aad:signin"
-                            }
+                            ]
                         },
                         {
                             "field": "start_date",
@@ -597,10 +549,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "YYYY-mm-ddTHH:MM:SSZ"
-                            }
+                            ]
                         },
                         {
                             "field": "filter",
@@ -660,10 +609,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "420"
-                            }
+                            ]
                         },
                         {
                             "field": "endpoint",
@@ -691,7 +637,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_user",
-                    "title": "Azure Active Directory Users",
+                    "title": "Microsoft Entra ID Users",
                     "entity": [
                         {
                             "field": "name",
@@ -714,19 +660,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "defaultValue": 86400,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -828,10 +767,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:aad:user"
-                            }
+                            ]
                         },
                         {
                             "field": "endpoint",
@@ -859,7 +795,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_group",
-                    "title": "Azure Active Directory Groups",
+                    "title": "Microsoft Entra ID Groups",
                     "entity": [
                         {
                             "field": "name",
@@ -882,19 +818,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -1024,7 +953,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_app",
-                    "title": "Azure Active Directory Applications",
+                    "title": "Microsoft Entra ID Applications",
                     "entity": [
                         {
                             "field": "name",
@@ -1047,19 +976,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -1189,7 +1111,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_service_principal",
-                    "title": "Azure Active Directory Service Principals",
+                    "title": "Microsoft Entra ID Service Principals",
                     "entity": [
                         {
                             "field": "name",
@@ -1212,19 +1134,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -1354,7 +1269,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_audit",
-                    "title": "Azure Active Directory Audit",
+                    "title": "Microsoft Entra ID Audit",
                     "entity": [
                         {
                             "type": "helpLink",
@@ -1365,8 +1280,7 @@
                             "options": {
                                 "text": "Azure AD throttling guidance",
                                 "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Active-Directory-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure#throttling-guidance"
-                            },
-                            "required": false
+                            }
                         },
                         {
                             "field": "name",
@@ -1389,18 +1303,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -1482,10 +1389,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:aad:audit"
-                            }
+                            ]
                         },
                         {
                             "field": "start_date",
@@ -1500,10 +1404,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "YYYY-mm-ddTHH:MM:SSZ"
-                            }
+                            ]
                         },
                         {
                             "field": "query_window_size",
@@ -1535,10 +1436,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "420"
-                            }
+                            ]
                         },
                         {
                             "field": "endpoint",
@@ -1566,7 +1464,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_identity_protection",
-                    "title": "Azure Active Directory Identity Protection",
+                    "title": "Microsoft Entra ID Identity Protection",
                     "entity": [
                         {
                             "field": "name",
@@ -1589,18 +1487,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -1740,7 +1631,7 @@
                 {
                     "template": "input_with_helper",
                     "name": "MS_AAD_device",
-                    "title": "Azure Active Directory Devices",
+                    "title": "Microsoft Entra ID Devices",
                     "entity": [
                         {
                             "field": "name",
@@ -1763,19 +1654,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "defaultValue": 86400,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -1857,10 +1741,180 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
+                            ]
+                        },
+                        {
+                            "field": "endpoint",
+                            "label": "Endpoint",
+                            "help": "",
+                            "required": false,
+                            "type": "singleSelect",
+                            "defaultValue": "v1.0",
                             "options": {
-                                "placeholder": "azure:aad:device"
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "v1.0",
+                                        "label": "v1.0"
+                                    },
+                                    {
+                                        "value": "beta",
+                                        "label": "Beta"
+                                    }
+                                ]
                             }
+                        }
+                    ]
+                },
+                {
+                    "template": "input_with_helper",
+                    "name": "ms_graph_security",
+                    "title": "Microsoft Graph Security API",
+                    "entity": [
+                        {
+                            "field": "name",
+                            "label": "Name",
+                            "type": "text",
+                            "help": "Enter a unique name for the data input",
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^[a-zA-Z]\\w*$",
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                                },
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 100,
+                                    "errorMsg": "Length of input name should be between 1 and 100"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "interval",
+                            "field": "interval",
+                            "label": "Interval",
+                            "help": "Time interval of input in seconds.",
+                            "required": true,
+                            "defaultValue": 86400
+                        },
+                        {
+                            "field": "index",
+                            "label": "Index",
+                            "type": "singleSelect",
+                            "defaultValue": "default",
+                            "options": {
+                                "endpointUrl": "data/indexes",
+                                "createSearchChoice": true,
+                                "denyList": "^_.*$"
+                            },
+                            "required": true,
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 80,
+                                    "errorMsg": "Length of index name should be between 1 and 80."
+                                }
+                            ]
+                        },
+                        {
+                            "field": "azure_app_account",
+                            "label": "Azure App Account",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "options": {
+                                "referenceName": "account"
+                            }
+                        },
+                        {
+                            "field": "tenant_id",
+                            "label": "Tenant ID",
+                            "help": "a.k.a. Directory ID",
+                            "required": true,
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "environment",
+                            "label": "Environment",
+                            "help": "",
+                            "required": true,
+                            "type": "singleSelect",
+                            "defaultValue": "public",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "public",
+                                        "label": "Azure Public"
+                                    },
+                                    {
+                                        "value": "gov",
+                                        "label": "Azure Government"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "graph_security_api_sourcetype",
+                            "label": "Sourcetype",
+                            "help": "",
+                            "required": true,
+                            "type": "text",
+                            "defaultValue": "ms:graph:security:alerts",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "start_date",
+                            "label": "Start Date",
+                            "help": "The date/time to start collecting data.  If no value is give, the input will start getting data 7 days in the past.",
+                            "required": false,
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "filter",
+                            "label": "Filter (optional)",
+                            "help": "Example: $filter=severity eq 'high'",
+                            "required": false,
+                            "type": "text",
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "minLength": 0,
+                                    "maxLength": 8192,
+                                    "errorMsg": "Max length of text input is 8192"
+                                },
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Value must start with $filter=",
+                                    "pattern": "^\\$filter\\="
+                                }
+                            ]
                         },
                         {
                             "field": "endpoint",
@@ -1888,8 +1942,19 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_metrics",
-                    "title": "Azure Metrics",
+                    "title": "Azure Metrics (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_metrics_note",
+                            "label": " ",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Metrics-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -1911,18 +1976,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -2019,10 +2077,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:metrics"
-                            }
+                            ]
                         },
                         {
                             "field": "namespaces",
@@ -2037,10 +2092,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "Example: Microsoft.Compute/virtualMachines"
-                            }
+                            ]
                         },
                         {
                             "type": "helpLink",
@@ -2145,17 +2197,14 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "5"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_security_center_input",
-                    "title": "Microsoft Defender for Cloud (formerly Azure Security Center) Alerts & Tasks",
+                    "title": "Microsoft Defender for Cloud Alerts & Tasks",
                     "entity": [
                         {
                             "field": "name",
@@ -2178,18 +2227,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -2293,10 +2335,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:securityCenter:alert"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_security_center_tasks",
@@ -2319,18 +2358,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:securityCenter:task"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_subscription",
-                    "title": "Azure Subscriptions",
+                    "title": "Azure Subscriptions (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_subscription_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Subscriptions-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -2352,19 +2399,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -2446,18 +2486,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:subscriptions"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_resource_group",
-                    "title": "Azure Resource Groups",
+                    "title": "Azure Resource Groups (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_resource_group_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Resource-Groups-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -2479,19 +2527,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -2588,18 +2629,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:resource:group"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_virtual_network",
-                    "title": "Azure Virtual Network",
+                    "title": "Azure Virtual Network (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_vnet_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Virtual-Network-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -2621,19 +2670,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -2737,10 +2779,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:vnet"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_network_interface_data",
@@ -2763,10 +2802,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:vnet:nic"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_security_group_data",
@@ -2789,10 +2825,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:vnet:nsg"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_public_ip_address_data",
@@ -2815,18 +2848,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:vnet:ip:public"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_comp",
-                    "title": "Azure Compute",
+                    "title": "Azure Compute (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_compute_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Compute-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -2848,19 +2889,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -2964,10 +2998,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:compute:vm"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_managed_disk_data",
@@ -2990,10 +3021,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:compute:disk"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_image_data",
@@ -3016,10 +3044,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:compute:image"
-                            }
+                            ]
                         },
                         {
                             "field": "collect_snapshot_data",
@@ -3042,18 +3067,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:compute:snapshot"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_kql",
-                    "title": "Azure KQL Log Analytics",
+                    "title": "Azure KQL Log Analytics (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_kql_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-KQL-Log-Analytics-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -3075,18 +3108,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -3147,10 +3173,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": ""
-                            }
+                            ]
                         },
                         {
                             "type": "text",
@@ -3166,10 +3189,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": ""
-                            }
+                            ]
                         },
                         {
                             "field": "environment",
@@ -3206,10 +3226,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:kql"
-                            }
+                            ]
                         },
                         {
                             "type": "checkbox",
@@ -3232,8 +3249,19 @@
                 {
                     "template": "input_with_helper",
                     "name": "azure_consumption",
-                    "title": "Azure Billing and Consumption",
+                    "title": "Azure Billing and Consumption (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_billing_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Billing-and-Consumption-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -3255,18 +3283,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -3363,10 +3384,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:billing"
-                            }
+                            ]
                         },
                         {
                             "field": "query_days",
@@ -3382,10 +3400,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "10"
-                            }
+                            ]
                         },
                         {
                             "field": "start_date",
@@ -3400,18 +3415,26 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "YYYY-MM-DD"
-                            }
+                            ]
                         }
                     ]
                 },
                 {
                     "template": "input_with_helper",
                     "name": "azure_reservation_recommendation",
-                    "title": "Azure Reservation Recommendation",
+                    "title": "Azure Reservation Recommendation (Deprecated)",
                     "entity": [
+                        {
+                            "type": "helpLink",
+                            "field": "azure_reservation_note",
+                            "label": "",
+                            "help": "This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                            "tooltip": "Deprecation notice",
+                            "options": {
+                                "text": "Deprecation notice",
+                                "link": "https://github.com/splunk/splunk-add-on-microsoft-azure/wiki/Configure-Azure-Reservation-Recommendation-inputs-for-the-Splunk-Add-on-for-Microsoft-Azure"
+                            }
+                        },
                         {
                             "field": "name",
                             "label": "Name",
@@ -3433,18 +3456,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -3541,10 +3557,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:reservation:recommendation"
-                            }
+                            ]
                         }
                     ]
                 },
@@ -3574,18 +3587,11 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true
                         },
                         {
                             "field": "index",
@@ -3697,10 +3703,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:resourcegraph"
-                            }
+                            ]
                         }
                     ]
                 },
@@ -3730,19 +3733,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -3839,10 +3835,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:topology"
-                            }
+                            ]
                         }
                     ]
                 },
@@ -3872,19 +3865,12 @@
                             ]
                         },
                         {
+                            "type": "interval",
                             "field": "interval",
                             "label": "Interval",
-                            "type": "text",
-                            "required": true,
-                            "defaultValue": 86400,
                             "help": "Time interval of input in seconds.",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ]
+                            "required": true,
+                            "defaultValue": 86400
                         },
                         {
                             "field": "index",
@@ -3981,10 +3967,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "azure:topology"
-                            }
+                            ]
                         },
                         {
                             "field": "network_watcher_name",
@@ -3999,10 +3982,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "NetworkWatcher_location"
-                            }
+                            ]
                         },
                         {
                             "field": "network_watcher_resource_group",
@@ -4017,10 +3997,7 @@
                                     "maxLength": 8192,
                                     "errorMsg": "Max length of text input is 8192"
                                 }
-                            ],
-                            "options": {
-                                "placeholder": "NetworkWatcherRG"
-                            }
+                            ]
                         },
                         {
                             "field": "target_resource_group",
