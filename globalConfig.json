@@ -2,10 +2,10 @@
     "meta": {
         "name": "TA-MS-AAD",
         "displayName": "Splunk Add-on for Microsoft Azure",
-        "version": "4.1.0",
+        "version": "4.2.0",
         "restRoot": "TA_MS_AAD",
-        "schemaVersion": "0.0.8",
-        "_uccVersion": "5.48.2"
+        "schemaVersion": "0.0.9",
+        "_uccVersion": "5.52.0"
     },
     "pages": {
         "configuration": {
@@ -405,7 +405,6 @@
                 ],
                 "actions": [
                     "edit",
-                    "enable",
                     "delete",
                     "clone"
                 ]
