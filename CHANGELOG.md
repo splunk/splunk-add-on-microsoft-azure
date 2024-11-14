@@ -1,3 +1,6 @@
+# Version 4.2.0
+* Fix: Do not reload settings and account endpoints before using them
+
 # Version 4.1.0
 * Added an input for Microsoft Entra ID Applications. [Issue #27](https://github.com/splunk/splunk-add-on-microsoft-azure/issues/27)
 * Added an input for Microsoft Graph Security API
