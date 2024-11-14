@@ -165,7 +165,7 @@ class ModInputms_graph_security(base_mi.BaseModInput):
                 for item in items:
             
                     # Keep track of the largest datetime seen during this query.
-                    this_dateTime = item["createdDateTime"]
+                    this_dateTime = item["lastModifiedDateTime"]
             
                     if(this_dateTime > max_dateTime):
                         max_dateTime = this_dateTime
