@@ -115,6 +115,10 @@ class ModInputazure_consumption(base_mi.BaseModInput):
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
+        scheme.add_argument(smi.Argument("azure_billing_note", title="",
+                                         description="This functionality has moved to the Splunk Add-on for Microsoft Cloud Services",
+                                         required_on_create=False,
+                                         required_on_edit=False))
         scheme.add_argument(smi.Argument("billing_sourcetype", title="Billing Sourcetype",
                                          description="",
                                          required_on_create=True,

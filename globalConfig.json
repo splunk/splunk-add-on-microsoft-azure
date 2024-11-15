@@ -5,7 +5,7 @@
         "version": "4.2.0",
         "restRoot": "TA_MS_AAD",
         "schemaVersion": "0.0.9",
-        "_uccVersion": "5.52.0"
+        "_uccVersion": "5.48.2"
     },
     "pages": {
         "configuration": {
