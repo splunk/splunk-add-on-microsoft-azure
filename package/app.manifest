@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "info": {
     "title": "Splunk Add-on for Microsoft Azure",
     "id": {
@@ -15,7 +15,7 @@
       }
     ],
     "releaseDate": null,
-    "description": "This add-on collects Microsoft Azure including Azure AD, resource metadata, metrics, Event Hub data, consumption, billing, topology, and Security Center.",
+    "description": "This add-on collects Microsoft Azure including Azure AD, resource metadata, metrics, Event Hub data, consumption, billing, topology, and Defender for Cloud.",
     "classification": {
       "intendedAudience": null,
       "categories": [],
@@ -38,6 +38,15 @@
       "uri": null
     }
   },
+  "supportedDeployments": [
+        "_standalone",
+        "_distributed",
+        "_search_head_clustering"
+  ],
+  "targetWorkloads": [
+        "_search_heads",
+        "_indexers"
+  ],
   "dependencies": {
   },
   "tasks": [],

@@ -1,12 +1,11 @@
-version: "3.7"
-
 services:
   splunk:
     image: splunk/splunk:${SPLUNK_VERSION}
     container_name: splunk
     hostname: splunk
+    platform: linux/amd64
     ports:
-      #- external port:internal port
+      # external port:internal port
       - 8000:8000
       - 8088:8088
       - 8089:8089
@@ -18,5 +17,5 @@ services:
       - SPLUNKBASE_USERNAME=${SPLUNKBASE_USERNAME}
       - SPLUNKBASE_PASSWORD=${SPLUNKBASE_PASSWORD}
     volumes:
-      - ./output/${SPLUNK_APP_ID}:/opt/splunk/etc/apps/${SPLUNK_APP_ID}/
       - ./splunk_files/user-prefs.conf:/opt/splunk/etc/system/local/user-prefs.conf
+      - ./output/${SPLUNK_APP_ID}:/opt/splunk/etc/apps/${SPLUNK_APP_ID}/

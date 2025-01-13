@@ -30,23 +30,42 @@ from solnlib import conf_manager
 from solnlib import log
 from solnlib.modular_input import checkpointer
 from splunktaucclib.modinput_wrapper import base_modinput  as base_mi 
+import dateutil.parser
 import requests
 import ta_azure_utils.auth as azauth
 import ta_azure_utils.utils as azutils
 
 bin_dir = os.path.basename(__file__)
 
-class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
+def get_start_date(helper, check_point_key):
+    
+    # Try to get a date from the check point first
+    d = helper.get_check_point(check_point_key)
+    
+    # If there was a check point date, retun it.
+    if (d not in [None,'']):
+        return d
+    else:
+        # No check point date, so look if a start date was specified as an argument
+        start_date = helper.get_arg("start_date")
+        if (start_date not in [None,'']):
+            d = dateutil.parser.parse(start_date)
+            return d.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+        else:
+            # If there was no start date specified, default to 7 days ago
+            return (datetime.datetime.now() - datetime.timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+
+class ModInputms_graph_security(base_mi.BaseModInput):
 
     def __init__(self):
         use_single_instance = False
-        super(ModInputMS_AAD_service_principal, self).__init__("ta_ms_aad", "MS_AAD_service_principal", use_single_instance)
+        super(ModInputms_graph_security, self).__init__("ta_ms_aad", "ms_graph_security", use_single_instance)
         self.global_checkbox_fields = None
 
     def get_scheme(self):
         """overloaded splunklib modularinput method"""
-        scheme = super(ModInputMS_AAD_service_principal, self).get_scheme()
-        scheme.title = ("Microsoft Entra ID Service Principals")
+        scheme = super(ModInputms_graph_security, self).get_scheme()
+        scheme.title = ("Azure Active Directory Sign-ins")
         scheme.description = ("Go to the add-on\'s configuration UI and configure modular inputs under the Inputs menu.")
         scheme.use_external_validation = True
         scheme.streaming_mode_xml = True
@@ -62,17 +81,21 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
                                          description="a.k.a. Directory ID",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("filter", title="Query Parameters (optional)",
-                                         description="Example: $filter=startswith(displayName,\'a\')",
+        scheme.add_argument(smi.Argument("filter", title="Filter (optional)",
+                                         description="",
                                          required_on_create=False,
                                          required_on_edit=False))
         scheme.add_argument(smi.Argument("environment", title="Environment",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("service_principal_sourcetype", title="Service Principal Sourcetype",
+        scheme.add_argument(smi.Argument("graph_security_api_sourcetype", title="Sourcetype",
                                          description="",
                                          required_on_create=True,
+                                         required_on_edit=False))
+        scheme.add_argument(smi.Argument("start_date", title="Start Date",
+                                         description="The date/time to start collecting data.  If no value is give, the input will start getting data 7 days in the past.",
+                                         required_on_create=False,
                                          required_on_edit=False))
         scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
                                          description="",
@@ -84,7 +107,23 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
         return "TA-MS-AAD"
 
     def validate_input(helper, definition):
-       pass
+
+        filter = definition.parameters.get('filter')
+        if(filter and (not filter.startswith("$filter="))):
+            raise ValueError("Filter must start with $filter=")
+        
+        start_date = definition.parameters.get('start_date')
+        if (start_date not in ['',None]):
+            try:
+                d = dateutil.parser.parse(start_date)
+            except Exception as e:
+                helper.log_error("_Splunk_ Invalid date format specified for 'Start Date': %s" % start_date)
+                raise ValueError("Invalid date format specified for 'Start Date': %s" % start_date)
+            # Make sure the date entered is less than 30 days in the past.
+            # Otherwise, the API will throw an error
+            if d.replace(tzinfo=None) < (datetime.datetime.now() - datetime.timedelta(days=30)):
+                helper.log_error("_Splunk_ 'Start Date' cannot be more than 30 days in the past.: " + start_date)
+                raise ValueError("'Start Date' cannot be more than 30 days in the past.")
     
 
     def collect_events(helper, ew):
@@ -92,38 +131,58 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
         client_id = global_account["username"]
         client_secret = global_account["password"]
         tenant_id = helper.get_arg("tenant_id")
+        check_point_key = "graph_security_api_last_date_%s" % helper.get_input_stanza_names()
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
-        source_type = helper.get_arg("service_principal_sourcetype")
-        filter = helper.get_arg("filter")
+        source_type = helper.get_arg("graph_security_api_sourcetype")
+        input_filter = helper.get_arg("filter")
         endpoint = helper.get_arg("endpoint")
         input_name = helper.get_input_stanza_names()
         
         environment = helper.get_arg("environment")
         graph_base_url = azutils.get_environment_graph(environment)
-        
+            
+        query_date = get_start_date(helper, check_point_key)
         session = azauth.get_graph_session(client_id, client_secret, tenant_id, environment, helper)
+        
         if(session):
-            helper.log_debug("_Splunk_ input_name=%s Collecting service principals data." % input_name)
-            url = graph_base_url + "/%s/servicePrincipals/" % endpoint
-            if(filter):
-                url = "%s?%s" % (url, filter)
+            
+            url = graph_base_url + "/%s/security/alerts?$orderby=lastModifiedDateTime&$filter=lastModifiedDateTime+gt+%s" % (endpoint, query_date)
+
+            # Insert the user filter if provided
+            if(input_filter):
+                if(not input_filter.startswith("$filter=")):
+                    helper.log_error("Invalid filter: %s" % filter)
+                else:
+                    url = url.replace("$filter=", "%s+and+" % input_filter)
+
+            helper.log_debug("_Splunk_ input_name=%s Security Graph URL used: %s" % (input_name, url))
+            max_dateTime = query_date
     
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
             items = None if response == None else response['value']
     
             while items:
                 for item in items:
+            
+                    # Keep track of the largest datetime seen during this query.
+                    this_dateTime = item["createdDateTime"]
+            
+                    if(this_dateTime > max_dateTime):
+                        max_dateTime = this_dateTime
+            
                     event = helper.new_event(
-                            data = json.dumps(item),
-                            source = event_source.lower(), 
-                            index = helper.get_output_index(),
-                            sourcetype = source_type)
+                        data=json.dumps(item),
+                        source=event_source.lower(),
+                        index=helper.get_output_index(),
+                        sourcetype=source_type)
                     ew.write_event(event)
     
                 sys.stdout.flush()
+                
+                # Check point the largest dateTime seen during the query
+                helper.save_check_point(check_point_key, max_dateTime)
                 response = azutils.handle_nextLink(helper=helper, response=response, session=session)
                 items = None if response == None else response['value']
-    
         else:
             helper.log_error("_Splunk_ Unable to obtain access token")
 
@@ -151,5 +210,5 @@ class ModInputMS_AAD_service_principal(base_mi.BaseModInput):
         return self.global_checkbox_fields
 
 if __name__ == "__main__":
-    exitcode = ModInputMS_AAD_service_principal().run(sys.argv)
+    exitcode = ModInputms_graph_security().run(sys.argv)
     sys.exit(exitcode)

@@ -1,3 +1,7 @@
-splunktaucclib>=6.0.6
+splunktaucclib
 python-dateutil>=2.8.2
 six>=1.16.0
+solnlib
+splunk-sdk
+#urllib3==1.*
+#requests<2.30.0
