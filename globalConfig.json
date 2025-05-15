@@ -359,8 +359,8 @@
                         "label": "User Sourcetype"
                     },
                     {
-                        "field": "endpoint",
-                        "label": "Endpoint"
+                        "field": "api_version",
+                        "label": "API Version"
                     },
                     {
                         "field": "audit_sourcetype",
@@ -611,8 +611,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -769,8 +769,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -927,8 +927,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -1085,8 +1085,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -1280,8 +1280,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -1447,8 +1447,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": true,
                             "type": "singleSelect",
@@ -1585,8 +1585,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": false,
                             "type": "singleSelect",
@@ -1758,8 +1758,8 @@
                             ]
                         },
                         {
-                            "field": "endpoint",
-                            "label": "Endpoint",
+                            "field": "api_version",
+                            "label": "API Version",
                             "help": "",
                             "required": false,
                             "type": "singleSelect",

@@ -97,7 +97,7 @@ class ModInputms_graph_security(base_mi.BaseModInput):
                                          description="The date/time to start collecting data.  If no value is give, the input will start getting data 7 days in the past.",
                                          required_on_create=False,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
@@ -135,7 +135,7 @@ class ModInputms_graph_security(base_mi.BaseModInput):
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         source_type = helper.get_arg("graph_security_api_sourcetype")
         input_filter = helper.get_arg("filter")
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         input_name = helper.get_input_stanza_names()
         
         environment = helper.get_arg("environment")
@@ -146,7 +146,7 @@ class ModInputms_graph_security(base_mi.BaseModInput):
         
         if(session):
             
-            url = graph_base_url + "/%s/security/alerts?$orderby=lastModifiedDateTime&$filter=lastModifiedDateTime+gt+%s" % (endpoint, query_date)
+            url = graph_base_url + "/%s/security/alerts?$orderby=lastModifiedDateTime&$filter=lastModifiedDateTime+gt+%s" % (api_version, query_date)
 
             # Insert the user filter if provided
             if(input_filter):
