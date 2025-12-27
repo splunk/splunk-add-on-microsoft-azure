@@ -105,7 +105,7 @@ class ModInputMS_AAD_audit(base_mi.BaseModInput):
                                          description="Advanced: number of seconds to subtract from the end date of the query. This helps accommodate near real-time events toward the end of a query that may arrive non sequentially.",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
@@ -145,7 +145,7 @@ class ModInputMS_AAD_audit(base_mi.BaseModInput):
         source_type = helper.get_arg("audit_sourcetype")
         input_name = helper.get_input_stanza_names()
     
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         
         environment = helper.get_arg("environment")
         graph_base_url = azutils.get_environment_graph(environment)
@@ -156,12 +156,12 @@ class ModInputMS_AAD_audit(base_mi.BaseModInput):
         if(session):
             if(query_window_size > 0):
                 end_date = azutils.get_end_date(helper, query_date, query_window_size)
-                url = graph_base_url + "/%s/auditLogs/directoryAudits?$orderby=activityDateTime&$filter=activityDateTime+ge+%s+and+activityDateTime+le+%s" % (endpoint, query_date, end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+                url = graph_base_url + "/%s/auditLogs/directoryAudits?$orderby=activityDateTime&$filter=activityDateTime+ge+%s+and+activityDateTime+le+%s" % (api_version, query_date, end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
                 helper.log_debug("_Splunk_ input_name=%s Query limit specified: %s" % (input_name, str(query_window_size)))
             else:
                 time_throttle_unformatted = datetime.datetime.utcnow() - datetime.timedelta(seconds=query_backoff_throttle)
                 time_throttle = time_throttle_unformatted.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-                url = graph_base_url + "/%s/auditLogs/directoryAudits?$orderby=activityDateTime&$filter=activityDateTime+gt+%s+and+activityDateTime+le+%s" % (endpoint, query_date, time_throttle)
+                url = graph_base_url + "/%s/auditLogs/directoryAudits?$orderby=activityDateTime&$filter=activityDateTime+gt+%s+and+activityDateTime+le+%s" % (api_version, query_date, time_throttle)
             helper.log_debug("_Splunk_ input_name=%s Audit URL used: %s" % (input_name, url))
             max_activityDate = query_date
     

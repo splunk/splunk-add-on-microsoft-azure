@@ -82,7 +82,7 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
@@ -102,7 +102,7 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
         subscription_id = helper.get_arg("subscription_id")
         tenant_id = helper.get_arg("tenant_id")
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         environment = helper.get_arg("environment")
         input_name = helper.get_input_stanza_names()
         
@@ -126,11 +126,11 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                 
                 if risk_detection_check_point in [None,'']:
                     helper.log_debug("_Splunk_ input_name=%s No risk detection data checkpoint. Collecting all current events." % input_name)
-                    url = graph_base_url + "/%s/identityProtection/riskDetections" % (endpoint)
+                    url = graph_base_url + "/%s/identityProtection/riskDetections" % (api_version)
                     risk_detection_check_point = ""
                 else:
                     helper.log_debug("_Splunk_ input_name=%s Found risk detction checkpoint: %s. Collecting events after this detected date/time" % (input_name, risk_detection_check_point))
-                    url = graph_base_url + "/%s/identityProtection/riskDetections?$orderby=lastUpdatedDateTime&$filter=lastUpdatedDateTime gt %s" % (endpoint, risk_detection_check_point)
+                    url = graph_base_url + "/%s/identityProtection/riskDetections?$orderby=lastUpdatedDateTime&$filter=lastUpdatedDateTime gt %s" % (api_version, risk_detection_check_point)
     
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
                 items = None if response == None else response['value']
@@ -161,11 +161,11 @@ class ModInputMS_AAD_identity_protection(base_mi.BaseModInput):
                 
                 if risky_user_check_point in [None,'']:
                     helper.log_debug("_Splunk_ input_name=%s No risky user data checkpoint. Collecting all current events." % input_name)
-                    url = graph_base_url + "/%s/identityProtection/riskyUsers" % (endpoint)
+                    url = graph_base_url + "/%s/identityProtection/riskyUsers" % (api_version)
                     risky_user_check_point = ""
                 else:
                     helper.log_debug("_Splunk_ input_name=%s Found risky user checkpoint: %s. Collecting events after this detected date/time" % (input_name, risky_user_check_point))
-                    url = graph_base_url + "/%s/identityProtection/riskyUsers?$orderby=riskLastUpdatedDateTime&$filter=riskLastUpdatedDateTime gt %s" % (endpoint, risky_user_check_point)
+                    url = graph_base_url + "/%s/identityProtection/riskyUsers?$orderby=riskLastUpdatedDateTime&$filter=riskLastUpdatedDateTime gt %s" % (api_version, risky_user_check_point)
                 
                 response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
                 items = None if response == None else response['value']

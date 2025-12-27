@@ -75,7 +75,7 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
@@ -96,7 +96,7 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         source_type = helper.get_arg("group_sourcetype")
         filter = helper.get_arg("filter")
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         input_name = helper.get_input_stanza_names()
         
         environment = helper.get_arg("environment")
@@ -105,7 +105,7 @@ class ModInputMS_AAD_group(base_mi.BaseModInput):
         session = azauth.get_graph_session(client_id, client_secret, tenant_id, environment, helper)
         if(session):
             helper.log_debug("_Splunk_ input_name=%s Collecting group data." % input_name)
-            url = graph_base_url + "/%s/groups/" % endpoint
+            url = graph_base_url + "/%s/groups/" % api_version
             if(filter):
                 url = "%s?%s" % (url, filter)
             

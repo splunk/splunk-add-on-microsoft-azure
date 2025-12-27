@@ -109,7 +109,7 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
                                          description="Advanced: number of seconds to subtract from the end date of the query. This helps accommodate near real-time events toward the end of a query that may arrive non sequentially.",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
@@ -153,7 +153,7 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
         query_window_size = int(helper.get_arg("query_window_size"))
         query_backoff_throttle = int(helper.get_arg("query_backoff_throttle"))
         input_filter = helper.get_arg("filter")
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         input_name = helper.get_input_stanza_names()
         
         environment = helper.get_arg("environment")
@@ -166,12 +166,12 @@ class ModInputMS_AAD_signins(base_mi.BaseModInput):
         
             if(query_window_size > 0):
                 end_date = azutils.get_end_date(helper, query_date, query_window_size)
-                url = graph_base_url + "/%s/auditLogs/signIns?$orderby=createdDateTime&$filter=createdDateTime+ge+%s+and+createdDateTime+le+%s" % (endpoint, query_date, end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+                url = graph_base_url + "/%s/auditLogs/signIns?$orderby=createdDateTime&$filter=createdDateTime+ge+%s+and+createdDateTime+le+%s" % (api_version, query_date, end_date.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
                 helper.log_debug("_Splunk_ input_name=%s Query limit specified: %s" % (input_name, str(query_window_size)))
             else:
                 time_throttle_unformatted = datetime.datetime.utcnow() - datetime.timedelta(seconds=query_backoff_throttle)
                 time_throttle = time_throttle_unformatted.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-                url = graph_base_url + "/%s/auditLogs/signIns?$orderby=createdDateTime&$filter=createdDateTime+gt+%s+and+createdDateTime+le+%s" % (endpoint, query_date, time_throttle)
+                url = graph_base_url + "/%s/auditLogs/signIns?$orderby=createdDateTime&$filter=createdDateTime+gt+%s+and+createdDateTime+le+%s" % (api_version, query_date, time_throttle)
 
             # Insert the user filter if provided
             if(input_filter):

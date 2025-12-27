@@ -71,7 +71,7 @@ class ModInputMS_AAD_device(base_mi.BaseModInput):
                                          description="",
                                          required_on_create=True,
                                          required_on_edit=False))
-        scheme.add_argument(smi.Argument("endpoint", title="Endpoint",
+        scheme.add_argument(smi.Argument("api_version", title="API Version",
                                          description="",
                                          required_on_create=False,
                                          required_on_edit=False))
@@ -91,7 +91,7 @@ class ModInputMS_AAD_device(base_mi.BaseModInput):
         tenant_id = helper.get_arg("tenant_id")
         event_source = "%s:tenant_id:%s" % (helper.input_type, tenant_id)
         source_type = helper.get_arg("device_sourcetype")
-        endpoint = helper.get_arg("endpoint")
+        api_version = helper.get_arg("api_version")
         input_name = helper.get_input_stanza_names()
         
         environment = helper.get_arg("environment")
@@ -101,7 +101,7 @@ class ModInputMS_AAD_device(base_mi.BaseModInput):
         
         if(session):
             helper.log_debug("_Splunk_ input_name=%s Collecting device data." % input_name)
-            url = graph_base_url + "/%s/devices" % endpoint
+            url = graph_base_url + "/%s/devices" % api_version
             
             response = azutils.get_items_batch_session(helper=helper, url=url, session=session)
             items = None if response == None else response['value']
